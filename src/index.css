@@ -25,3 +25,27 @@ code {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+#menu {
+  background-color: #253a46;
+  padding: 20px;
+  font-size: 20px;
+}
+
+#menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: white;
+  display: flex;
+  gap: 15px;
+}
+
+#menu a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.activeLink {
+  text-decoration: underline !important;
+}
