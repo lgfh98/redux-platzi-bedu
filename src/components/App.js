@@ -1,16 +1,28 @@
+import { useState } from "react";
+
 const App = () => {
-  const ponerFilas = () => [
-    <tr>
-      <td>Rodolfo</td>
-      <td>Rodolfo@platzi.com</td>
-      <td>Rodolfo.com</td>
-    </tr>,
-    <tr>
-      <td>Rodolfo</td>
-      <td>Rodolfo@platzi.com</td>
-      <td>Rodolfo.com</td>
-    </tr>,
+  const usersData = [
+    {
+      name: "Rodolfo",
+      email: "Rodolfo@platzi.com",
+      personalSite: "Rodolfo.com",
+    },
+    {
+      name: "Rodolfo",
+      email: "Rodolfo@platzi.com",
+      personalSite: "Rodolfo.com",
+    },
   ];
+  const [users, setUsers] = useState(usersData);
+
+  const ponerFilas = () =>
+    users.map(({ name, email, personalSite }) => (
+      <tr>
+        <td>{name}</td>
+        <td>{email}</td>
+        <td>{personalSite}</td>
+      </tr>
+    ));
 
   return (
     <div className="margen">
