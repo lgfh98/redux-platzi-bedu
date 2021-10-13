@@ -10,8 +10,10 @@ const App = () => {
     <HashRouter>
       <Menu />
       <Switch>
-        <Route exact path="/" component={Users} />
-        <Route exact path="/tasks" component={Tasks} />
+        <div className="margen">
+          <Route exact path="/" component={Users} />
+          <Route exact path="/tasks" component={Tasks} />
+        </div>
       </Switch>
     </HashRouter>
   );

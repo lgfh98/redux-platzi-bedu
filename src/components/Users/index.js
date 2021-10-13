@@ -56,7 +56,6 @@ const App = () => {
   }
 
   return (
-    <div className="margen">
       <table className="tabla">
         <thead>
           <tr>
@@ -67,7 +66,6 @@ const App = () => {
         </thead>
         <tbody>{ponerFilas()}</tbody>
       </table>
-    </div>
   );
 };
 
