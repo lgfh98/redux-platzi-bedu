@@ -3,18 +3,10 @@ import { connect } from "react-redux";
 import * as userActions from "../../actions/userActions";
 import { Spinner } from "../general/Spinner";
 import { Fatal } from "../general/Fatal";
+import { Table } from "../Table";
 
 const App = ({ users, loading, error, getAllUsers }) => {
   console.log("render");
-
-  const ponerFilas = () =>
-    users.map(({ id, name, email, website }) => (
-      <tr key={id}>
-        <td>{name}</td>
-        <td>{email}</td>
-        <td>{website}</td>
-      </tr>
-    ));
 
   useEffect(() => {
     getAllUsers();
@@ -29,16 +21,11 @@ const App = ({ users, loading, error, getAllUsers }) => {
   }
 
   return (
-    <table className="tabla">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Correo</th>
-          <th>Enlace</th>
-        </tr>
-      </thead>
-      <tbody>{ponerFilas()}</tbody>
-    </table>
+    <Table
+      data={users}
+      title="Usuarios"
+      rowNames={["name", "email", "website"]}
+    />
   );
 };
 
