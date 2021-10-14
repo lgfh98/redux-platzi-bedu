@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import { connect } from "react-redux";
 
 const useData = (URL) => {
   const [data, setData] = useState([]);
@@ -29,7 +30,7 @@ const useData = (URL) => {
   return { data, loading, error };
 };
 
-const App = () => {
+const App = (props) => {
   const {
     data: users,
     loading,
@@ -56,17 +57,19 @@ const App = () => {
   }
 
   return (
-      <table className="tabla">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Enlace</th>
-          </tr>
-        </thead>
-        <tbody>{ponerFilas()}</tbody>
-      </table>
+    <table className="tabla">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Enlace</th>
+        </tr>
+      </thead>
+      <tbody>{ponerFilas()}</tbody>
+    </table>
   );
 };
 
-export default App;
+const mapStateToProps = (state) => state.userReducer;
+
+export default connect(mapStateToProps, null)(App);
