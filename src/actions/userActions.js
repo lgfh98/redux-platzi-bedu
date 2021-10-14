@@ -1,8 +1,16 @@
-import { GET_ALL_USERS } from "./actionNames";
+import { GET_ALL } from "./actionTypes/User";
+import axios from "axios";
 
-export const getAllUsers = () => (dispatch) => {
-  dispatch({
-    type: GET_ALL_USERS,
-    payload: [1, 2, 3],
-  });
+export const getAllUsers = () => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      "https://jsonplaceholder.typicode.com/users"
+    );
+    dispatch({
+      type: GET_ALL,
+      payload: data,
+    });
+  } catch (error) {
+    console.error(error);
+  }
 };

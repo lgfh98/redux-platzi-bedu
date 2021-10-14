@@ -4,42 +4,36 @@ import axios from "axios";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/userActions";
 
-const useData = (URL, action) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(undefined);
+// const useData = (URL, action) => {
+//   const [data, setData] = useState([]);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState(undefined);
 
-  useEffect(() => {
-    console.log(action);
-    action();
-    // setLoading(true);
-    // setError(undefined);
-    // axios
-    //   .get(URL)
-    //   .then(({ data }) => {
-    //     ReactDOM.unstable_batchedUpdates(() => {
-    //       setData(data);
-    //       setLoading(false);
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     ReactDOM.unstable_batchedUpdates(() => {
-    //       setError(error);
-    //       setLoading(false);
-    //     });
-    //   });
-  }, [URL]);
+//   useEffect(() => {
+//     console.log(action);
+//     action();
+//     setLoading(true);
+//     setError(undefined);
+//     axios
+//       .get(URL)
+//       .then(({ data }) => {
+//         ReactDOM.unstable_batchedUpdates(() => {
+//           setData(data);
+//           setLoading(false);
+//         });
+//       })
+//       .catch((error) => {
+//         ReactDOM.unstable_batchedUpdates(() => {
+//           setError(error);
+//           setLoading(false);
+//         });
+//       });
+//   }, [URL]);
 
-  return { data, loading, error };
-};
+//   return { data, loading, error };
+// };
 
-const App = (props) => {
-  const {
-    data: users,
-    loading,
-    error,
-  } = useData("https://jsonplaceholder.typicode.com/users", props.getAllUsers);
-
+const App = ({ users, getAllUsers }) => {
   console.log("render");
 
   const ponerFilas = () =>
@@ -51,15 +45,17 @@ const App = (props) => {
       </tr>
     ));
 
-  if (loading) {
-    return "Cargando...";
-  }
+  useEffect(() => {
+    getAllUsers();
+  }, [getAllUsers]);
 
-  if (error) {
-    return "Error ❌";
-  }
+  // if (loading) {
+  //   return "Cargando...";
+  // }
 
-  console.log(props);
+  // if (error) {
+  //   return "Error ❌";
+  // }
 
   return (
     <table className="tabla">

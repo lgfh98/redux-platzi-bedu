@@ -1,4 +1,4 @@
-import { GET_ALL_USERS } from "../actions/actionNames";
+import { GET_ALL } from "../actions/actionTypes/User";
 
 const INITIAL_STATE = {
   users: [],
@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case GET_ALL_USERS:
+    case GET_ALL:
       return { state, users: action.payload };
     default:
       return state;
