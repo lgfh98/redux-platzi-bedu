@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/userActions";
+import { Spinner } from "../general/Spinner";
+import { Fatal } from "../general/Fatal";
 
 const App = ({ users, loading, error, getAllUsers }) => {
   console.log("render");
@@ -19,11 +21,11 @@ const App = ({ users, loading, error, getAllUsers }) => {
   }, [getAllUsers]);
 
   if (loading) {
-    return "Cargando...";
+    return <Spinner />;
   }
 
   if (error) {
-    return `Error ❌ - ${error}`;
+    return <Fatal message={error} />;
   }
 
   return (
