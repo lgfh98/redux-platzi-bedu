@@ -2,29 +2,32 @@ import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 import { connect } from "react-redux";
+import * as userActions from "../../actions/userActions";
 
-const useData = (URL) => {
+const useData = (URL, action) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(undefined);
 
   useEffect(() => {
-    setLoading(true);
-    setError(undefined);
-    axios
-      .get(URL)
-      .then(({ data }) => {
-        ReactDOM.unstable_batchedUpdates(() => {
-          setData(data);
-          setLoading(false);
-        });
-      })
-      .catch((error) => {
-        ReactDOM.unstable_batchedUpdates(() => {
-          setError(error);
-          setLoading(false);
-        });
-      });
+    console.log(action);
+    action();
+    // setLoading(true);
+    // setError(undefined);
+    // axios
+    //   .get(URL)
+    //   .then(({ data }) => {
+    //     ReactDOM.unstable_batchedUpdates(() => {
+    //       setData(data);
+    //       setLoading(false);
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     ReactDOM.unstable_batchedUpdates(() => {
+    //       setError(error);
+    //       setLoading(false);
+    //     });
+    //   });
   }, [URL]);
 
   return { data, loading, error };
@@ -35,7 +38,7 @@ const App = (props) => {
     data: users,
     loading,
     error,
-  } = useData("https://jsonplaceholder.typicode.com/users");
+  } = useData("https://jsonplaceholder.typicode.com/users", props.getAllUsers);
 
   console.log("render");
 
@@ -56,6 +59,8 @@ const App = (props) => {
     return "Error ❌";
   }
 
+  console.log(props);
+
   return (
     <table className="tabla">
       <thead>
@@ -72,4 +77,4 @@ const App = (props) => {
 
 const mapStateToProps = (state) => state.userReducer;
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, userActions)(App);
