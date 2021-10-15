@@ -1,4 +1,4 @@
-import { GET_ALL, LOADING, ERROR } from "../actions/actionTypes/User";
+import { GET_ALL, LOADING, ERROR, DEFAULT } from "../actions/actionTypes/User";
 
 const INITIAL_STATE = {
   users: [],
@@ -18,6 +18,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return { ...state, loading: true, error: undefined };
     case ERROR:
       return { ...state, loading: false, error: action.payload };
+    case DEFAULT:
+      return state;
     default:
       return state;
   }

@@ -6,8 +6,7 @@ import * as userActions from "../../actions/userActions";
 import * as PublicationActions from "../../actions/PublicationActions";
 
 const { getAll: getAllUsers } = userActions;
-const { getAll: getAllPublications, getByUser: getPublicationsByUser } =
-  PublicationActions;
+const { getByUser: getPublicationsByUser } = PublicationActions;
 
 const PublicationsComponent = (props) => {
   // reducer states
@@ -30,6 +29,8 @@ const PublicationsComponent = (props) => {
     loading: loadingPublications,
     error: errorPublications,
   } = publicationReducer;
+
+  console.log(publications);
 
   useEffect(() => {
     if (!users.length) {
@@ -61,7 +62,6 @@ const mapStateToProps = ({ userReducer, publicationReducer }) => ({
 
 const mapDispatchToProps = {
   getAllUsers,
-  getAllPublications,
   getPublicationsByUser,
 };
 

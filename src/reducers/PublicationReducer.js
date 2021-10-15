@@ -1,4 +1,9 @@
-import { GET_ALL, LOADING, ERROR } from "../actions/actionTypes/Publication";
+import {
+  GET_ALL,
+  LOADING,
+  ERROR,
+  DEFAULT,
+} from "../actions/actionTypes/Publication";
 
 const INITIAL_STATE = {
   publications: [],
@@ -26,6 +31,8 @@ const publicationReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: action.payload,
       };
+    case DEFAULT:
+      return state;
     default:
       return state;
   }
