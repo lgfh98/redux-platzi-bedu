@@ -1,15 +1,12 @@
 import { GET_ALL, LOADING, ERROR, DEFAULT } from "./actionTypes/Publication";
 import axios from "axios";
 
-export const getByUser = (key) => async (dispatch, getState) => {
-  const { users } = getState().userReducer;
+export const getByUser = (userId) => async (dispatch, getState) => {
   const { publications } = getState().publicationReducer;
-  const userId = users[key].id;
 
-  let updatedPublications = [];
-  const search = publications.find(
-    (userPublications) => userPublications[0].userId === userId
-  );
+  const search = publications.find((e) => {
+    return e.userId.toString() === userId.toString();
+  });
 
   if (!search) {
     dispatch({
@@ -20,7 +17,10 @@ export const getByUser = (key) => async (dispatch, getState) => {
         `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
       );
 
-      updatedPublications = [...publications, data];
+      const updatedPublications = [
+        ...publications,
+        { userId, publications: data },
+      ];
 
       dispatch({
         type: GET_ALL,

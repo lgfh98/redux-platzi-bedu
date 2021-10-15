@@ -1,29 +1,13 @@
-import { Link } from "react-router-dom";
-
-export const Table = ({ data, title, rowNames }) => {
-  const renderRows = () =>
-    data.map((item, key) => (
-      <tr key={item.id}>
-        {rowNames.map((rowName, subKey) => (
-          <td key={subKey}>{item[rowName]}</td>
-        ))}
-        <td>
-          <Link to={`/publications/${key}`}>
-            <div className="eye-solid icon"></div>
-          </Link>
-        </td>
-      </tr>
-    ));
-
+export const Table = ({ title, renderRows, headers }) => {
   return (
     <>
       <h2>{title}</h2>
       <table className="tabla">
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Enlace</th>
+            {headers.map((name, key) => (
+              <th key={key}>{name}</th>
+            ))}
           </tr>
         </thead>
         <tbody>{renderRows()}</tbody>

@@ -9,16 +9,12 @@ const { getAll: getAllUsers } = userActions;
 const { getByUser: getPublicationsByUser } = PublicationActions;
 
 const PublicationsComponent = (props) => {
-  // reducer states
   const { userReducer, publicationReducer } = props;
-
-  // actions
   const { getAllUsers, getPublicationsByUser } = props;
 
-  // param props
   const {
     match: {
-      params: { key },
+      params: { userId },
     },
   } = props;
 
@@ -30,27 +26,42 @@ const PublicationsComponent = (props) => {
     error: errorPublications,
   } = publicationReducer;
 
-  console.log(publications);
-
   useEffect(() => {
     if (!users.length) {
-      getAllUsers().then(() => getPublicationsByUser(key));
+      getAllUsers().then(() => getPublicationsByUser(userId));
     } else {
-      getPublicationsByUser(key);
+      getPublicationsByUser(userId);
     }
-  }, [getAllUsers, getPublicationsByUser, key, users.length]);
+  }, [getAllUsers, getPublicationsByUser, userId, users.length]);
 
-  if (loadingUsers) {
+  const renderPublications = () => {
+    const elements = publications.find((e) => e.userId === userId);
+    return (
+      <section>
+        {elements?.publications.map(({ title, body, id }) => (
+          <div key={id}>
+            <h2>{title}</h2>
+            <p>{body}</p>
+          </div>
+        ))}
+      </section>
+    );
+  };
+
+  if (loadingUsers || loadingPublications) {
     return <Spinner />;
   }
 
-  if (errorUsers) {
+  if (errorUsers || errorPublications) {
     return <Fatal message={errorUsers} />;
   }
 
+  const user = users.find((e) => e.id.toString() === userId.toString());
+
   return (
     <>
-      <h1>Publicaciones de</h1>
+      <h1>Publicaciones de {user?.name}</h1>
+      {renderPublications()}
     </>
   );
 };

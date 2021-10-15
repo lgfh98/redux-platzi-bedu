@@ -14,7 +14,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Users} />
           <Route exact path="/tasks" component={Tasks} />
-          <Route exact path="/publications/:key" component={Publications} />
+          <Route exact path="/publications/:userId" component={Publications} />
         </Switch>
       </Layout>
     </HashRouter>
