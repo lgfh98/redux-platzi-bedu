@@ -6,11 +6,11 @@ import { Fatal } from "../general/Fatal";
 import { Table } from "../Table";
 
 const App = ({ users, loading, error, getAllUsers }) => {
-  console.log("render");
-
   useEffect(() => {
-    getAllUsers();
-  }, [getAllUsers]);
+    if (!users.length) {
+      getAllUsers();
+    }
+  }, [getAllUsers, users.length]);
 
   if (loading) {
     return <Spinner />;

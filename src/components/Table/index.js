@@ -4,12 +4,12 @@ export const Table = ({ data, title, rowNames }) => {
   const renderRows = () =>
     data.map((item, key) => (
       <tr key={item.id}>
-        {rowNames.map((rowName) => (
-          <td>{item[rowName]}</td>
+        {rowNames.map((rowName, subKey) => (
+          <td key={subKey}>{item[rowName]}</td>
         ))}
         <td>
           <Link to={`/publications/${key}`}>
-            <div class="eye-solid icon"></div>
+            <div className="eye-solid icon"></div>
           </Link>
         </td>
       </tr>
