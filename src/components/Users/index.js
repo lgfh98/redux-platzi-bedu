@@ -1,23 +1,30 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import * as userActions from "../../actions/userActions";
 import { Spinner } from "../general/Spinner";
 import { Fatal } from "../general/Fatal";
 import { Table } from "../Table";
+import * as userActions from "../../actions/userActions";
 
-const App = ({ users, loading, error, getAllUsers }) => {
+const { getAll: getAllUsers } = userActions;
+
+const App = (props) => {
+  const { userReducer } = props;
+  const { getAllUsers } = props;
+
+  const { users, loading: loadingUsers, error: errorUsers } = userReducer;
+
   useEffect(() => {
     if (!users.length) {
       getAllUsers();
     }
   }, [getAllUsers, users.length]);
 
-  if (loading) {
+  if (loadingUsers) {
     return <Spinner />;
   }
 
-  if (error) {
-    return <Fatal message={error} />;
+  if (errorUsers) {
+    return <Fatal message={errorUsers} />;
   }
 
   return (
@@ -29,6 +36,10 @@ const App = ({ users, loading, error, getAllUsers }) => {
   );
 };
 
-const mapStateToProps = (state) => state.userReducer;
+const mapStateToProps = ({ userReducer }) => ({ userReducer });
 
-export default connect(mapStateToProps, userActions)(App);
+const mapDispatchToProps = {
+  getAllUsers,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
