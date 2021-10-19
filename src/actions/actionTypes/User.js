@@ -1,5 +1,6 @@
-const ENTITY = "USER";
-export const GET_ALL = `GET_ALL==>${ENTITY}`;
-export const LOADING = `LOADING_REQUEST==>${ENTITY}`;
-export const ERROR = `ERROR_REQUEST==>${ENTITY}`;
-export const DEFAULT = `DEFAULT==>${ENTITY}`;
+import { USER } from "./Entities";
+
+export const GET_ALL = `GET_ALL==>${USER}`;
+export const LOADING = `LOADING_REQUEST==>${USER}`;
+export const ERROR = `ERROR_REQUEST==>${USER}`;
+export const DEFAULT = `DEFAULT==>${USER}`;

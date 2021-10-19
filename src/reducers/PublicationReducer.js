@@ -1,22 +1,23 @@
 import {
-  GET_ALL,
+  GET_ALL_BY_USER,
   LOADING,
+  LOADING_COMMENTS,
   ERROR,
   DEFAULT,
 } from "../actions/actionTypes/Publication";
 
 const INITIAL_STATE = {
-  publications: [],
+  publicationsByUser: [],
   loading: false,
   error: undefined,
 };
 
 const publicationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case GET_ALL:
+    case GET_ALL_BY_USER:
       return {
         ...state,
-        publications: action.payload,
+        publicationsByUser: action.payload,
         loading: false,
       };
     case LOADING:
@@ -24,6 +25,11 @@ const publicationReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: true,
         error: undefined,
+      };
+    case LOADING_COMMENTS:
+      return {
+        ...state,
+        publicationsByUser: action.payload,
       };
     case ERROR:
       return {

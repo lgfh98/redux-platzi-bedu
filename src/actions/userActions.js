@@ -16,7 +16,7 @@ export const getAll = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR,
-      payload: "Algo salió mal, intenta más tarde.",
+      payload: "Información de usuarios no disponible",
     });
   }
 };

@@ -2,15 +2,19 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Spinner } from "../general/Spinner";
 import { Fatal } from "../general/Fatal";
+import { Publication } from "../Publication";
 import * as userActions from "../../actions/userActions";
 import * as PublicationActions from "../../actions/PublicationActions";
+import * as CommentActions from "../../actions/CommentActions";
 
 const { getAll: getAllUsers } = userActions;
 const { getByUser: getPublicationsByUser } = PublicationActions;
+const { getByPublication: getCommentsByPublication } = CommentActions;
 
 const PublicationsComponent = (props) => {
   const { userReducer, publicationReducer } = props;
-  const { getAllUsers, getPublicationsByUser } = props;
+  const { getAllUsers, getPublicationsByUser, getCommentsByPublication } =
+    props;
 
   const {
     match: {
@@ -21,7 +25,7 @@ const PublicationsComponent = (props) => {
   const { users, loading: loadingUsers, error: errorUsers } = userReducer;
 
   const {
-    publications,
+    publicationsByUser,
     loading: loadingPublications,
     error: errorPublications,
   } = publicationReducer;
@@ -35,24 +39,28 @@ const PublicationsComponent = (props) => {
   }, [getAllUsers, getPublicationsByUser, userId, users.length]);
 
   const renderPublications = () => {
-    const elements = publications.find((e) => e.userId === userId);
+    const filter = publicationsByUser.find((e) => e.userId === userId);
     return (
-      <section>
-        {elements?.publications.map(({ title, body, id }) => (
-          <div key={id}>
-            <h2>{title}</h2>
-            <p>{body}</p>
-          </div>
+      <>
+        {filter?.userPublications.map((publication) => (
+          <Publication
+            key={publication.id}
+            {...publication}
+            // handleLoadComments={() =>
+            //   getCommentsByPublication(publication.id, userId, false)
+            // }
+            handleLoadComments={getCommentsByPublication}
+            userId={userId}
+          />
         ))}
-      </section>
+      </>
     );
   };
 
   if (loadingUsers || loadingPublications) {
     return <Spinner />;
   }
-
-  if (errorUsers || errorPublications) {
+  if (errorUsers) {
     return <Fatal message={errorUsers} />;
   }
 
@@ -60,8 +68,9 @@ const PublicationsComponent = (props) => {
 
   return (
     <>
-      <h1>Publicaciones de {user?.name}</h1>
+      {user && <h1>Publicaciones de {user?.name}</h1>}
       {renderPublications()}
+      {errorPublications && <Fatal message={errorPublications} />}
     </>
   );
 };
@@ -74,6 +83,7 @@ const mapStateToProps = ({ userReducer, publicationReducer }) => ({
 const mapDispatchToProps = {
   getAllUsers,
   getPublicationsByUser,
+  getCommentsByPublication,
 };
 
 export const Publications = connect(

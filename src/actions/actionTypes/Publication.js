@@ -1,5 +1,7 @@
-const ENTITY = "PUBLICATION";
-export const GET_ALL = `GET_ALL==>${ENTITY}`;
-export const LOADING = `LOADING_REQUEST==>${ENTITY}`;
-export const ERROR = `ERROR_REQUEST==>${ENTITY}`;
-export const DEFAULT = `DEFAULT==>${ENTITY}`;
+import { PUBLICATION } from "./Entities";
+
+export const GET_ALL_BY_USER = `GET_ALL_BY_USER==>${PUBLICATION}`;
+export const LOADING = `LOADING_REQUEST==>${PUBLICATION}`;
+export const LOADING_COMMENTS = `LOADING_COMMENTS==>${PUBLICATION}`;
+export const ERROR = `ERROR_REQUEST==>${PUBLICATION}`;
+export const DEFAULT = `DEFAULT==>${PUBLICATION}`;
