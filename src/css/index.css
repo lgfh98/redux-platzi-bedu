@@ -81,3 +81,9 @@ code {
   height: 150px;
   transform: scaleY(100%);
 }
+
+.tasksContainer {
+  font-size: 20px;
+  margin-left: 50px;
+  margin-bottom: 70px;
+}

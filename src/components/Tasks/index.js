@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
+import { Spinner } from "../general/Spinner";
+import { Fatal } from "../general/Fatal";
 import * as taskActions from "../../actions/TaskActions";
 
 const { getAll: getAllTasks } = taskActions;
@@ -11,16 +13,50 @@ const mapDispatchToProps = {
 };
 
 const TasksComponent = (props) => {
-  const { taskReducer } = props;
+  const {
+    taskReducer: { tasks, loading, error },
+  } = props;
   const { getAllTasks } = props;
 
-  console.log(taskReducer);
+  const renderUserTaskSections = () =>
+    Object.keys(tasks).map((userId) => (
+      <div key={userId}>
+        <h2>Usuario {userId}</h2>
+        <div className="tasksContainer">{renderUserTasks(userId)}</div>
+      </div>
+    ));
+
+  const renderUserTasks = (userId) => {
+    const userTasks = {
+      ...tasks[userId],
+    };
+
+    console.log({ userTasks });
+
+    return Object.keys(userTasks).map((taskId) => (
+      <div key={taskId}>
+        <input type="checkbox" defaultChecked={userTasks[taskId].completed} />
+        {userTasks[taskId].title}
+      </div>
+    ));
+  };
 
   useEffect(() => {
-    getAllTasks();
-  }, []);
+    if (!Object.keys(tasks).length) {
+      getAllTasks();
+    }
+  }, [getAllTasks, tasks]);
 
-  return <div>Tareas</div>;
+  if (error) {
+    return <Fatal message={error} />;
+  }
+
+  return (
+    <>
+      {loading && <Spinner />}
+      {renderUserTaskSections()}
+    </>
+  );
 };
 
 export const Tasks = connect(
