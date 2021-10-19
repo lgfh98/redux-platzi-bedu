@@ -4,7 +4,7 @@ import { Spinner } from "../general/Spinner";
 import { Fatal } from "../general/Fatal";
 import { Table } from "../Table";
 import { Link } from "react-router-dom";
-import * as userActions from "../../actions/userActions";
+import * as userActions from "../../actions/UserActions";
 
 const { getAll: getAllUsers } = userActions;
 

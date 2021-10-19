@@ -3,8 +3,7 @@ import Menu from "./Menu";
 import Users from "./Users";
 import Layout from "./Layout";
 import { Publications } from "./Publications";
-
-const Tasks = () => "Tareas";
+import { Tasks } from "./Tasks";
 
 const App = () => {
   return (
