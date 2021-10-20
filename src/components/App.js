@@ -4,6 +4,7 @@ import Users from "./Users";
 import Layout from "./Layout";
 import { Publications } from "./Publications";
 import { Tasks } from "./Tasks";
+import { SaveTask } from "./Tasks/Save";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Users} />
           <Route exact path="/tasks" component={Tasks} />
+          <Route exact path="/tasks/save" component={SaveTask} />
           <Route exact path="/publications/:userId" component={Publications} />
         </Switch>
       </Layout>

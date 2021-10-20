@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { Spinner } from "../general/Spinner";
 import { Fatal } from "../general/Fatal";
 import * as taskActions from "../../actions/TaskActions";
@@ -31,8 +32,6 @@ const TasksComponent = (props) => {
       ...tasks[userId],
     };
 
-    console.log({ userTasks });
-
     return Object.keys(userTasks).map((taskId) => (
       <div key={taskId}>
         <input type="checkbox" defaultChecked={userTasks[taskId].completed} />
@@ -53,6 +52,9 @@ const TasksComponent = (props) => {
 
   return (
     <>
+      <button style={{ alignSelf: "flex-start" }}>
+        <Link to="/tasks/save">Agregar</Link>
+      </button>
       {loading && <Spinner />}
       {renderUserTaskSections()}
     </>
