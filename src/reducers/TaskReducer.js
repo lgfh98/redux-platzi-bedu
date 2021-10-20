@@ -16,6 +16,7 @@ const INITIAL_STATE = {
     userId: "",
     taskTitle: "",
     successfulMessage: undefined,
+    redirect: false,
   },
 };
 
@@ -26,6 +27,10 @@ const taskReducer = (state = INITIAL_STATE, action) => {
         ...state,
         tasks: action.payload,
         loading: false,
+        saveTask: {
+          ...state.saveTask,
+          redirect: false,
+        },
       };
     case SAVE_TASK:
       return {
@@ -36,6 +41,7 @@ const taskReducer = (state = INITIAL_STATE, action) => {
           userId: "",
           taskTitle: "",
           successfulMessage: "La tarea ha sido guardada",
+          redirect: true,
         },
       };
     case LOADING:

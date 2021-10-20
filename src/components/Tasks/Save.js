@@ -2,11 +2,13 @@ import { connect } from "react-redux";
 import * as TaskActions from "../../actions/TaskActions";
 import { Fatal } from "../general/Fatal";
 import { Spinner } from "../general/Spinner";
+import { Redirect } from "react-router";
 
 const { changeSaveTaskUserId, changeSaveTaskTitle, saveTask } = TaskActions;
 
 const SaveTaskComponent = (props) => {
-  const { userId, taskTitle, loading, error, successfulMessage } = props;
+  const { userId, taskTitle, loading, error, successfulMessage, redirect } =
+    props;
   const { changeSaveTaskUserId, changeSaveTaskTitle, saveTask } = props;
 
   const handleSaveTask = (e) => {
@@ -21,8 +23,21 @@ const SaveTaskComponent = (props) => {
     saveTask(newTask);
   };
 
+  const handleDisabled = () => {
+    if (loading || !userId || !taskTitle) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleRedirect = () => {
+    setTimeout(() => props.history.push("/tasks"), 2000);
+  };
+
   return (
     <>
+      {/* {redirect && handleRedirect()} */}
+      {redirect && <Redirect to="/tasks" />}
       <form onSubmit={handleSaveTask}>
         <h1>Guardar Tarea</h1>
         Usuario id:
@@ -43,7 +58,7 @@ const SaveTaskComponent = (props) => {
         />
         <br />
         <br />
-        <button disabled={loading} type="submit">
+        <button disabled={handleDisabled()} type="submit">
           Guardar
         </button>
       </form>
@@ -60,11 +75,11 @@ const SaveTaskComponent = (props) => {
 
 const mapStateToProps = ({
   taskReducer: {
-    saveTask: { userId, taskTitle, successfulMessage },
+    saveTask: { userId, taskTitle, successfulMessage, redirect },
     loading,
     error,
   },
-}) => ({ userId, taskTitle, loading, error, successfulMessage });
+}) => ({ userId, taskTitle, loading, error, successfulMessage, redirect });
 
 const mapDispatchToProps = {
   changeSaveTaskUserId,
