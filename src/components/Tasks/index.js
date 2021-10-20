@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Spinner } from "../general/Spinner";
 import { Fatal } from "../general/Fatal";
-import * as taskActions from "../../actions/TaskActions";
+import * as TaskActions from "../../actions/TaskActions";
 
-const { getAll: getAllTasks } = taskActions;
+const { getAll: getAllTasks } = TaskActions;
 
 const mapStateToProps = ({ taskReducer }) => ({ taskReducer });
 

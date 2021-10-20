@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { Spinner } from "../general/Spinner";
 import { Fatal } from "../general/Fatal";
 import { Publication } from "../Publication";
-import * as userActions from "../../actions/UserActions";
+import * as UserActions from "../../actions/UserActions";
 import * as PublicationActions from "../../actions/PublicationActions";
 import * as CommentActions from "../../actions/CommentActions";
 
-const { getAll: getAllUsers } = userActions;
+const { getAll: getAllUsers } = UserActions;
 const { getByUser: getPublicationsByUser } = PublicationActions;
 const { getByPublication: getCommentsByPublication } = CommentActions;
 

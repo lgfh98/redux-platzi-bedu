@@ -1,4 +1,10 @@
-import { GET_ALL, LOADING, ERROR } from "./actionTypes/Task";
+import {
+  GET_ALL,
+  LOADING,
+  ERROR,
+  CHANGE_SAVE_TASK_USER_ID,
+  CHANGE_SAVE_TASK_TITLE,
+} from "./actionTypes/Task";
 import axios from "axios";
 
 export const getAll = () => async (dispatch) => {
@@ -31,4 +37,18 @@ export const getAll = () => async (dispatch) => {
       payload: "Información de tareas no disponible",
     });
   }
+};
+
+export const changeSaveTaskUserId = (userId) => (dispatch) => {
+  dispatch({
+    type: CHANGE_SAVE_TASK_USER_ID,
+    payload: userId,
+  });
+};
+
+export const changeSaveTaskTitle = (taskTitle) => (dispatch) => {
+  dispatch({
+    type: CHANGE_SAVE_TASK_TITLE,
+    payload: taskTitle,
+  });
 };

@@ -4,9 +4,9 @@ import { Spinner } from "../general/Spinner";
 import { Fatal } from "../general/Fatal";
 import { Table } from "../Table";
 import { Link } from "react-router-dom";
-import * as userActions from "../../actions/UserActions";
+import * as UserActions from "../../actions/UserActions";
 
-const { getAll: getAllUsers } = userActions;
+const { getAll: getAllUsers } = UserActions;
 
 const App = (props) => {
   const { userReducer } = props;
