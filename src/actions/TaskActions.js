@@ -4,6 +4,7 @@ import {
   ERROR,
   CHANGE_SAVE_TASK_USER_ID,
   CHANGE_SAVE_TASK_TITLE,
+  SAVE_TASK,
 } from "./actionTypes/Task";
 import axios from "axios";
 
@@ -51,4 +52,22 @@ export const changeSaveTaskTitle = (taskTitle) => (dispatch) => {
     type: CHANGE_SAVE_TASK_TITLE,
     payload: taskTitle,
   });
+};
+
+export const saveTask = (newTask) => async (dispatch) => {
+  dispatch({
+    type: LOADING,
+  });
+  try {
+    await axios.post("https://jsonplaceholder.typicode.com/todos", newTask);
+
+    dispatch({
+      type: SAVE_TASK,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR,
+      payload: "No se pudo guardar la tarea",
+    });
+  }
 };

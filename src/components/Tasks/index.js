@@ -50,12 +50,15 @@ const TasksComponent = (props) => {
     return <Fatal message={error} />;
   }
 
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <button style={{ alignSelf: "flex-start" }}>
         <Link to="/tasks/save">Agregar</Link>
       </button>
-      {loading && <Spinner />}
       {renderUserTaskSections()}
     </>
   );

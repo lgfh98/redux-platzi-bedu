@@ -5,6 +5,7 @@ import {
   DEFAULT,
   CHANGE_SAVE_TASK_TITLE,
   CHANGE_SAVE_TASK_USER_ID,
+  SAVE_TASK,
 } from "../actions/actionTypes/Task";
 
 const INITIAL_STATE = {
@@ -12,8 +13,9 @@ const INITIAL_STATE = {
   loading: false,
   error: undefined,
   saveTask: {
-    userId: undefined,
-    taskTitle: undefined,
+    userId: "",
+    taskTitle: "",
+    successfulMessage: undefined,
   },
 };
 
@@ -25,8 +27,28 @@ const taskReducer = (state = INITIAL_STATE, action) => {
         tasks: action.payload,
         loading: false,
       };
+    case SAVE_TASK:
+      return {
+        ...state,
+        tasks: {},
+        loading: false,
+        saveTask: {
+          userId: "",
+          taskTitle: "",
+          successfulMessage: "La tarea ha sido guardada",
+        },
+      };
     case LOADING:
-      return { ...state, loading: true, error: undefined };
+      return {
+        ...state,
+        loading: true,
+        error: undefined,
+        saveTask: {
+          userId: "",
+          taskTitle: "",
+          successfulMessage: undefined,
+        },
+      };
     case ERROR:
       return { ...state, loading: false, error: action.payload };
     case CHANGE_SAVE_TASK_USER_ID:

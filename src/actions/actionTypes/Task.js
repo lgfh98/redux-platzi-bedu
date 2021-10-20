@@ -6,3 +6,4 @@ export const ERROR = `ERROR_REQUEST==>${TASK}`;
 export const DEFAULT = `DEFAULT==>${TASK}`;
 export const CHANGE_SAVE_TASK_USER_ID = `CHANGE_SAVE_TASK_USER_ID==>${TASK}`;
 export const CHANGE_SAVE_TASK_TITLE = `CHANGE_SAVE_TASK_TITLE==>${TASK}`;
+export const SAVE_TASK = `SAVE_TASK==>${TASK}`;
