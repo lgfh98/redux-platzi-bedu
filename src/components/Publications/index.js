@@ -22,7 +22,7 @@ const PublicationsComponent = (props) => {
     },
   } = props;
 
-  const { users, loading: loadingUsers, error: errorUsers } = userReducer;
+  const { users, error: errorUsers } = userReducer;
 
   const {
     publicationsByUser,
@@ -36,7 +36,7 @@ const PublicationsComponent = (props) => {
     } else {
       getPublicationsByUser(userId);
     }
-  }, [getAllUsers, getPublicationsByUser, userId, users.length]);
+  }, []);
 
   const renderPublications = () => {
     const filter = publicationsByUser.find((e) => e.userId === userId);
@@ -57,7 +57,7 @@ const PublicationsComponent = (props) => {
     );
   };
 
-  if (loadingUsers || loadingPublications) {
+  if (loadingPublications) {
     return <Spinner />;
   }
   if (errorUsers) {

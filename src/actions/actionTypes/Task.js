@@ -10,3 +10,4 @@ export const CHANGE_COMPLETED_TASK = `CHANGE_COMPLETED_TASK==>${TASK}`;
 export const SAVE_TASK = `SAVE_TASK==>${TASK}`;
 export const CLEAN_STATE = `CLEAN_STATE==>${TASK}`;
 export const SET_TASK_CHECK = `SET_TASK_CHECK==>${TASK}`;
+export const DELETE_TASK = `DELETE_TASK==>${TASK}`;

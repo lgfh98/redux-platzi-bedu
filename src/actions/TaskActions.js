@@ -8,6 +8,7 @@ import {
   SAVE_TASK,
   CLEAN_STATE,
   SET_TASK_CHECK,
+  DELETE_TASK,
 } from "./actionTypes/Task";
 import axios from "axios";
 
@@ -134,3 +135,24 @@ export const setTaskCheck =
       payload: updatedTasks,
     });
   };
+
+export const deleteTask = (taskId) => async (dispatch) => {
+  dispatch({
+    type: LOADING,
+  });
+
+  try {
+    const response = await axios.delete(
+      `https://jsonplaceholder.typicode.com/todos/${taskId}`
+    );
+    console.log({ response });
+    dispatch({
+      type: DELETE_TASK,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR,
+      payload: "Servicio no disponible",
+    });
+  }
+};

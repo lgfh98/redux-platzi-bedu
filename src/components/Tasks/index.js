@@ -1,3 +1,4 @@
+// import React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -5,13 +6,13 @@ import { Spinner } from "../general/Spinner";
 import { Fatal } from "../general/Fatal";
 import * as TaskActions from "../../actions/TaskActions";
 
-const { getAll: getAllTasks, setTaskCheck } = TaskActions;
+const { getAll: getAllTasks, setTaskCheck, deleteTask } = TaskActions;
 
 const TasksComponent = (props) => {
   const {
     taskReducer: { tasks, loading, error },
   } = props;
-  const { getAllTasks, setTaskCheck } = props;
+  const { getAllTasks, setTaskCheck, deleteTask } = props;
 
   const renderUserTaskSections = () =>
     Object.keys(tasks).map((userId) => (
@@ -44,7 +45,9 @@ const TasksComponent = (props) => {
             Editar
           </Link>
         </button>
-        <button type="button">Eliminar</button>
+        <button type="button" onClick={() => deleteTask(taskId)}>
+          Eliminar
+        </button>
       </div>
     ));
   };
@@ -53,14 +56,14 @@ const TasksComponent = (props) => {
     if (!Object.keys(tasks).length) {
       getAllTasks();
     }
-  }, [getAllTasks, tasks]);
-
-  if (error) {
-    return <Fatal message={error} />;
-  }
+  }, [tasks]);
 
   if (loading) {
     return <Spinner />;
+  }
+
+  if (error) {
+    return <Fatal message={error} />;
   }
 
   return (
@@ -78,9 +81,15 @@ const mapStateToProps = ({ taskReducer }) => ({ taskReducer });
 const mapDispatchToProps = {
   getAllTasks,
   setTaskCheck,
+  deleteTask,
 };
 
 export const Tasks = connect(
   mapStateToProps,
   mapDispatchToProps
 )(TasksComponent);
+
+// export const Tasks = connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(React.memo(TasksComponent));

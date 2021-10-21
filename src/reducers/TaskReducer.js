@@ -9,6 +9,7 @@ import {
   SAVE_TASK,
   CLEAN_STATE,
   SET_TASK_CHECK,
+  DELETE_TASK,
 } from "../actions/actionTypes/Task";
 
 const INITIAL_STATE = {
@@ -80,6 +81,8 @@ const taskReducer = (state = INITIAL_STATE, action) => {
           redirect: false,
         },
       };
+    case DELETE_TASK:
+      return { ...state, tasks: {} };
     case DEFAULT:
       return state;
     default:
