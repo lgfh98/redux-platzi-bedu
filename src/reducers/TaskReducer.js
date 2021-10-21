@@ -5,7 +5,10 @@ import {
   DEFAULT,
   CHANGE_SAVE_TASK_TITLE,
   CHANGE_SAVE_TASK_USER_ID,
+  CHANGE_COMPLETED_TASK,
   SAVE_TASK,
+  CLEAN_STATE,
+  SET_TASK_CHECK,
 } from "../actions/actionTypes/Task";
 
 const INITIAL_STATE = {
@@ -27,10 +30,6 @@ const taskReducer = (state = INITIAL_STATE, action) => {
         ...state,
         tasks: action.payload,
         loading: false,
-        saveTask: {
-          ...state.saveTask,
-          redirect: false,
-        },
       };
     case SAVE_TASK:
       return {
@@ -38,8 +37,7 @@ const taskReducer = (state = INITIAL_STATE, action) => {
         tasks: {},
         loading: false,
         saveTask: {
-          userId: "",
-          taskTitle: "",
+          ...state.saveTask,
           successfulMessage: "La tarea ha sido guardada",
           redirect: true,
         },
@@ -49,11 +47,6 @@ const taskReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: true,
         error: undefined,
-        saveTask: {
-          userId: "",
-          taskTitle: "",
-          successfulMessage: undefined,
-        },
       };
     case ERROR:
       return { ...state, loading: false, error: action.payload };
@@ -66,6 +59,26 @@ const taskReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         saveTask: { ...state.saveTask, taskTitle: action.payload },
+      };
+    case CHANGE_COMPLETED_TASK:
+      return {
+        ...state,
+        saveTask: { ...state.saveTask, completed: action.payload },
+      };
+    case SET_TASK_CHECK:
+      return {
+        ...state,
+        tasks: action.payload,
+      };
+    case CLEAN_STATE:
+      return {
+        ...state,
+        saveTask: {
+          userId: "",
+          taskTitle: "",
+          successfulMessage: undefined,
+          redirect: false,
+        },
       };
     case DEFAULT:
       return state;

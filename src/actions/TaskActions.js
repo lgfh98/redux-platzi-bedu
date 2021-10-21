@@ -4,7 +4,10 @@ import {
   ERROR,
   CHANGE_SAVE_TASK_USER_ID,
   CHANGE_SAVE_TASK_TITLE,
+  CHANGE_COMPLETED_TASK,
   SAVE_TASK,
+  CLEAN_STATE,
+  SET_TASK_CHECK,
 } from "./actionTypes/Task";
 import axios from "axios";
 
@@ -54,6 +57,13 @@ export const changeSaveTaskTitle = (taskTitle) => (dispatch) => {
   });
 };
 
+export const changeCompletedTask = (completed) => (dispatch) => {
+  dispatch({
+    type: CHANGE_COMPLETED_TASK,
+    payload: completed,
+  });
+};
+
 export const saveTask = (newTask) => async (dispatch) => {
   dispatch({
     type: LOADING,
@@ -71,3 +81,56 @@ export const saveTask = (newTask) => async (dispatch) => {
     });
   }
 };
+
+export const editTask = (task) => async (dispatch) => {
+  dispatch({
+    type: LOADING,
+  });
+
+  try {
+    await axios.put(
+      `https://jsonplaceholder.typicode.com/todos/${task.id}`,
+      task
+    );
+
+    dispatch({
+      type: SAVE_TASK,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR,
+      payload: "No se pudo guardar la tarea",
+    });
+  }
+};
+
+export const cleanState = () => async (dispatch) => {
+  dispatch({
+    type: CLEAN_STATE,
+  });
+};
+
+export const setTaskCheck =
+  ({ userId, taskId }) =>
+  async (dispatch, getState) => {
+    const { tasks } = getState().taskReducer;
+    const targetTask = tasks[userId][taskId];
+
+    const updatedTasks = {
+      ...tasks,
+    };
+
+    updatedTasks[userId] = {
+      ...tasks[userId],
+    };
+
+    updatedTasks[userId][taskId] = {
+      ...tasks[userId][taskId],
+      completed: !targetTask.completed,
+    };
+
+    dispatch({
+      type: SET_TASK_CHECK,
+      payload: updatedTasks,
+    });
+  };

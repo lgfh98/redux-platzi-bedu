@@ -5,19 +5,13 @@ import { Spinner } from "../general/Spinner";
 import { Fatal } from "../general/Fatal";
 import * as TaskActions from "../../actions/TaskActions";
 
-const { getAll: getAllTasks } = TaskActions;
-
-const mapStateToProps = ({ taskReducer }) => ({ taskReducer });
-
-const mapDispatchToProps = {
-  getAllTasks,
-};
+const { getAll: getAllTasks, setTaskCheck } = TaskActions;
 
 const TasksComponent = (props) => {
   const {
     taskReducer: { tasks, loading, error },
   } = props;
-  const { getAllTasks } = props;
+  const { getAllTasks, setTaskCheck } = props;
 
   const renderUserTaskSections = () =>
     Object.keys(tasks).map((userId) => (
@@ -33,9 +27,24 @@ const TasksComponent = (props) => {
     };
 
     return Object.keys(userTasks).map((taskId) => (
-      <div key={taskId}>
-        <input type="checkbox" defaultChecked={userTasks[taskId].completed} />
+      <div
+        key={taskId}
+        style={{ display: "flex", alignItems: "center", gap: "10px" }}
+      >
+        <input
+          type="checkbox"
+          defaultChecked={userTasks[taskId].completed}
+          onChange={() => setTaskCheck({ userId, taskId })}
+        />
         {userTasks[taskId].title}
+        <button type="button">
+          <Link
+            to={`/tasks/save/${userTasks[taskId].userId}/${userTasks[taskId].id}`}
+          >
+            Editar
+          </Link>
+        </button>
+        <button type="button">Eliminar</button>
       </div>
     ));
   };
@@ -62,6 +71,13 @@ const TasksComponent = (props) => {
       {renderUserTaskSections()}
     </>
   );
+};
+
+const mapStateToProps = ({ taskReducer }) => ({ taskReducer });
+
+const mapDispatchToProps = {
+  getAllTasks,
+  setTaskCheck,
 };
 
 export const Tasks = connect(
